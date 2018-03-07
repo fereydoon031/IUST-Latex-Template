@@ -1,0 +1,184 @@
+ % در این فایل، دستورها و تنظیمات مورد نیاز، آورده شده است.
+%-------------------------------------------------------------------------------------------------------------------
+
+% در ورژن جدید زی‌پرشین برای تایپ متن‌های ریاضی، این سه بسته، حتماً باید فراخوانی شود
+\usepackage{amsthm,amssymb}
+%گزینه [fleqn] برای چپ چین کردن تمام فرمولها است. (برای وسط چین بودن آن‌ها، آکولاد را حذف کنید.)
+\usepackage[fleqn]{amsmath}
+% بسته‌ای برای تنطیم حاشیه‌های بالا، پایین، چپ و راست صفحه
+\usepackage[top=30mm, bottom=30mm, left=25mm, right=40mm]{geometry}
+% بسته‌‌ای برای ظاهر شدن شکل‌ها و تصاویر متن
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usetikzlibrary{calc,intersections}
+% بسته‌ای برای رسم کادر
+\usepackage{framed} 
+% بسته‌‌ای برای چاپ شدن خودکار تعداد صفحات در صفحه «معرفی پایان‌نامه»
+\usepackage{lastpage}
+% بسته‌ و دستوراتی برای ایجاد لینک‌های رنگی با امکان جهش
+\usepackage[pagebackref=false,colorlinks,linkcolor=blue,citecolor=blue]{hyperref}
+% چنانچه قصد پرینت گرفتن نوشته خود را دارید، خط بالا را غیرفعال و  از دستور زیر استفاده کنید چون در صورت استفاده از دستور زیر‌‌، 
+% لینک‌ها به رنگ سیاه ظاهر خواهند شد که برای پرینت گرفتن، مناسب‌تر است
+\usepackage{xcolor}
+\hypersetup{
+	colorlinks,
+	linkcolor={black},
+	citecolor={black},
+	urlcolor={black}
+}
+% بسته‌ای برای تنظیم نحوه ظاهر شدن اولین صفحه فصلها
+\usepackage{titlesec}
+% بسته‌ لازم برای تنظیم سربرگ‌ها
+\usepackage{fancyhdr}
+% تنظیم سر برگ دو خطی (مخصوص دانشگاه علم و صنعت)
+\renewcommand\headrule{%
+  \begingroup
+  \vspace{5pt}
+  \hrule height 2pt width\headwidth
+  \vspace{1pt}
+  \hrule height 0.7pt width\headwidth
+  \endgroup
+}
+
+\def\MyHeader{\titleformat{\chapter}[display]{\centering \normalfont\huge\bfseries}
+{ {\chaptertitlename} { \thechapter:}}{20pt}{\Huge}[\newpage \thispagestyle{fancy}]}
+\def\MyBibHeader{\titleformat{\chapter}[display]{\centering \normalfont\huge\bfseries}
+{ {\chaptertitlename} { \thechapter:}}{20pt}{\Huge}[\newpage \thispagestyle{plain}]}
+\def\onvan{عنوان}
+
+\def\MATtextbaseline{1.5}
+\renewcommand{\baselinestretch}{\MATtextbaseline}
+%
+\usepackage{setspace}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{subfigure}
+\usepackage[subfigure]{tocloft}
+% بسته‌ای برای ظاهر شدن «مراجع» و «نمایه» در فهرست مطالب
+\usepackage[nottoc]{tocbibind}
+\setlength{\cftfignumwidth}{12mm}
+% دستورات مربوط به ایجاد نمایه
+\usepackage{makeidx}
+\makeindex
+% فراخوانی بسته زی‌پرشین و تعریف قلم فارسی و انگلیسی
+% در صورتی که میخاهید زی‌پرشین تصمیم بگیرد که حروف را کشیده کند گزینه [Kashida] را به زی‌پرشین اضافه کنید.
+\usepackage{xepersian}
+\settextfont[Scale=1]{HM XZar}
+\setlatintextfont[Scale=0.9]{Times New Roman}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% چنانچه می‌خواهید اعداد در فرمول‌ها، انگلیسی باشد، خط زیر را غیرفعال کنید. (توجه داشته باشید که فونت‌های زیر بر روی رایانه شما نصب شده باشد.)
+%\setdigitfont[Scale=1]{Persian Modern}%{XB Zar}
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% تعریف قلم‌های فارسی و انگلیسی اضافی برای استفاده در بعضی از قسمت‌های متن
+\defpersianfont\titlefont[Scale=1]{HM XTitr}
+% \defpersianfont\iranic[Scale=1.1]{XB Zar Oblique}%Italic}%
+% \defpersianfont\nastaliq[Scale=1.2]{IranNastaliq}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+% دستوری برای حذف کلمه «چکیده»
+\renewcommand{\abstractname}{}
+% دستوری برای حذف کلمه «abstract»
+%\renewcommand{\latinabstract}{}
+% دستوری برای تغییر نام کلمه «اثبات» به «برهان»
+\renewcommand\proofname{\textbf{برهان}}
+% دستوری برای تغییر نام کلمه «کتاب‌نامه» به «مراجع»
+\renewcommand{\bibname}{مراجع}
+% دستوری برای تعریف واژه‌نامه انگلیسی به فارسی
+\newcommand\persiangloss[2]{#1\dotfill\lr{#2}\\}
+% دستوری برای تعریف واژه‌نامه فارسی به انگلیسی 
+\newcommand\englishgloss[2]{#2\dotfill\lr{#1}\\}
+% تعریف دستور جدید «\پ» برای خلاصه‌نویسی جهت نوشتن عبارت «پروژه/پایان‌نامه/رساله»
+\newcommand{\پ}{پروژه/پایان‌نامه/رساله }
+
+%\newcommand\BackSlash{\char`\\}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\SepMark{-}
+\setlength{\cftsubsecnumwidth}{4em}
+\setlength{\cftsecnumwidth}{3em}
+% تعریف و نحوه ظاهر شدن عنوان قضیه‌ها، تعریف‌ها، مثال‌ها و ...
+\theoremstyle{definition}
+\newtheorem{definition}{تعریف}[section]
+\theoremstyle{theorem}
+\newtheorem{theorem}[definition]{قضیه}
+\newtheorem{lemma}[definition]{لم}
+\newtheorem{proposition}[definition]{گزاره}
+\newtheorem{corollary}[definition]{نتیجه}
+\newtheorem{remark}[definition]{ملاحظه}
+\theoremstyle{definition}
+\newtheorem{example}[definition]{مثال}
+
+%\renewcommand{\theequation}{\thechapter-\arabic{equation}}
+%\def\bibname{مراجع}
+\numberwithin{algorithm}{chapter}
+\def\listalgorithmname{فهرست الگوریتم‌ها}
+\def\listfigurename{فهرست تصاویر}
+\def\listtablename{فهرست جداول}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\doublespacing
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% دستوراتی برای اضافه کردن کلمه «فصل» در فهرست مطالب
+
+\newlength\mylenprt
+\newlength\mylenchp
+\newlength\mylenapp
+
+\renewcommand\cftpartpresnum{\partname~}
+\renewcommand\cftchappresnum{\chaptername~}
+\renewcommand\cftchapaftersnum{:}
+
+\settowidth\mylenprt{\cftpartfont\cftpartpresnum\cftpartaftersnum}
+\settowidth\mylenchp{\cftchapfont\cftchappresnum\cftchapaftersnum}
+\settowidth\mylenapp{\cftchapfont\appendixname~\cftchapaftersnum}
+\addtolength\mylenprt{\cftpartnumwidth}
+\addtolength\mylenchp{\cftchapnumwidth}
+\addtolength\mylenapp{\cftchapnumwidth}
+
+\setlength\cftpartnumwidth{\mylenprt}
+\setlength\cftchapnumwidth{\mylenchp}	
+
+\makeatletter
+{\def\thebibliography#1{\chapter*{\refname\@mkboth
+   {\uppercase{\refname}}{\uppercase{\refname}}}\list
+   {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}
+   \rightmargin\labelwidth
+   \advance\rightmargin\labelsep
+   \advance\rightmargin\bibindent
+   \itemindent -\bibindent
+
+   \listparindent \itemindent
+   \parsep \z@
+   \usecounter{enumi}}
+   \def\newblock{}
+   \sloppy
+   \sfcode`\.=1000\relax}}
+\makeatother
+
+% تنظیم سفارشی سربرگ
+\pagestyle{fancy}
+\fancyhf{}
+ \fancyhead[L]{ \leftmark}
+ \fancyhead[R]{\Onva}
+ \fancyfoot[C]{\thepage}
+ \renewcommand{\chaptermark}[1]{%
+\markboth{\ #1}{}}
+
+% بسته ای برای ریست کردن شماره پاورقی در هر صفحه
+\usepackage{perpage} %the perpage package
+\MakePerPage{footnote}
+%دستوراتی برای پاورقی (شماره گذاری انگلیسی برای پاورقی انگلیسی)
+
+\makeatletter
+\def\@makeLTRfnmark{\hbox{\@textsuperscript{\latinfont\@thefnmark}}}
+\renewcommand\@makefntext[1]{%
+    \parindent 1em%
+    \noindent
+    \hb@xt@1.8em{\hss\if@RTL\@makefnmark\else\@makeLTRfnmark\fi}#1}
+\makeatother
+
+\renewcommand{\arraystretch}{1.2}

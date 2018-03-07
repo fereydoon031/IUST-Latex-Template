@@ -1,0 +1,808 @@
+% !TeX root=main.tex
+\chapter[مدلسازی دینامیکی و آئرودینامیکی]{ مدلسازی دینامیکی و آئرودینامیکی پرنده بدون سرنشین}\label{Chap:2}
+
+\section{فرضیات حاکم بر مساله} 
+فرضیاتی برای اجتناب از پیچیدگی معادلات حاکم بر پهپاد انجام شده‌است تا معادلات ساده‌تر شوند و در عین حال دقت لازم را دارا باشند که به شرح زیر می‌باشند: 
+\begin{enumerate}
+ \item انحنای زمین در نظر گرفته نشده‌است.
+ \item چرخش زمین در نظر گرفته نشده‌است.
+ \item  پهپاد مورد نظر متقارن در نظر گرفته شده‌است ( $  I_{xy}=I_{yz} =0$ ).
+ \item جرم پهپاد ثابت در نظر گرفته شده‌است.
+\end{enumerate}
+\section{معرفی پرنده و خصوصیات آن}
+روابط بیان شده در مورد پرنده مورد نظر، به صورت کلی بیان شده است و برای خواننده هیچ‌گونه مشکلی را ایجاد نخواهد کرد اما در ذکر جزئیات پرنده، از اعداد بدون بعد استفاده شده است.
+ در ادامه به بیان توصیف کلی مشخصات پرنده عمومی\LTRfootnote{\lr{General UAV}}، اندازه‌های فیزیکی و هم‌چنین معرفی عملگرهای کنترلی مورد استفاده در این نوع پرنده عمومی پرداخته شده‌است.
+\subsection{خصوصیات کلی و مشخصات فیزیکی پرنده}
+پرنده بدون سرنشین مورد ذکر، دارای یک موتور است که از نوع جت می‌باشد.
+این پرنده دارای بال‌های عمودی و افقی است که عملگرهای کنترلی بر روی آن‌ها قرار دارند.
+
+ پارامترهای فیزیکی هواپیما در جدول\ref{table:UAVParameters} فهرست شده است.
+\begin{table}
+\centering%
+\caption{پارامترهای فیزیکی بی بعد شده هواپیما}\label{table:UAVParameters}
+\begin{tabular}{|c|c|c|}
+\hline
+پارامتر فیزیکی & نماد & اندازه\\
+  \hline
+   مساحت نرمال شده بال & $\hat{S}$ & 1 \\
+   \hline
+  قطر نرمال شده میانگین بال & $ \hat{\overline{c}}$ & 1\\
+   \hline
+  طول بال & $\hat{b}$  & 3٫25\\ 
+ \hline
+  جرم هواپیما & $\hat{m}$ & 1\\
+ \hline
+  گشتاور اینرسی رول & $\hat{I}_{xx}$ & 0٫1353\\ 
+ \hline
+  گشتاور اینرسی پیچ & $\hat{I}_{yy}$ & 0٫8902\\
+ \hline
+گشتاور اینرسی یاو & $\hat{I}_{zz}$ & 1\\
+ \hline
+گشتاور اینرسی حاصلضرب حول محور $y$  & $\hat{I}_{xz}$ & 0٫0174\\
+ \hline
+\end{tabular}
+\end{table}
+\section{تعریف دستگاه‌های مختصات}
+پیش از بدست آوردن معادلات حرکت لازم است تا دستگاه‌های اصلی تعریف شوند:
+\subsection{دستگاه مختصات زمین ثابت}
+دستگاه مرجع\LTRfootnote{\lr{Earth Fixed Coordinates}} که تمامی معادلات در آن بیان می‌شوند، دستگاه راست گرد لخت ثابت بر روی زمین است که محور $x$ آن منطبق با شمال جغرافیایی و محور $z$ آن منطبق با بردار گرانش می‌باشد.
+\subsection{دستگاه مختصات بدنی پهپاد}
+دستگاه کمکی است\LTRfootnote{\lr{Body Coordinates}} که تمامی بردارها (مانند نیرو و سرعت) در آن بیان می‌شوند. این دستگاه راست گرد طوری به بدنه پرنده بدون سرنشین چسبیده است که محور $x$ آن به سمت نوک پرنده می‌باشد و محور $y$ آن هم راستا با خط واصل دو بال اصلی پرنده می‌باشد. هم‌چنین مرکز این دستگاه بر روی مرکز جرم پرنده بدون سرنشین قرار دارد.
+\subsection{دستگاه مختصات باد}
+دومین دستگاه کمکی\LTRfootnote{\lr{Wind Coordinates}}، دستگاه راست گرد باد می‌باشد.
+این دستگاه به گونه‌ای به بدنه پرنده چسبیده است که محور $x$ آن، هم جهت با سرعت پرنده و محور $y$ آن هم راستا با خط واصل دو بال اصلی پرنده می‌باشد.
+
+در شرایطی که باد وجود ندارد، این دستگاه منطبق بر دستگاه مختصات بدنی خواهد بود.
+\section{دینامیک جسم صلب پرنده بدون سرنشین}
+معادلات کلی به شرح ذیل می‌باشد\cite{Nik}:
+\begin{subequations}
+\begin{align}
+& \vec{F}={\frac {\rm d}{{\rm d}t}} \left(  \left\{ { m \vec{V} } \right\} \right), \label{E4} \\
+& \vec{M}={\frac {\rm d}{{\rm d}t}} \left(  \left\{ \vec{H} \right\}  \right)
+\end{align}
+\end{subequations}
+قابل ذکر است که معادلات نسبت به دستگاه لخت معتبر هستند اما هر کدام از بردارها  ($\vec{V},\vec{F},...$)  می‌توانند در دستگاه بدنی یا دستگاه لخت بیان شوند.
+بدلیل اینکه بیان این بردارها در دستگاه لخت باعث پیچیده شدن معادلات می‌شود، بیان آن‌ها در دستگاه بدنی انجام شده‌است.
+
+در ادامه فرض شده است که بردارهای $\vec{i},\vec{j},\vec{k}$  بردارهای یکه دستگاه بدنی باشند، بنابراین سرعت خطی و سرعت زاویه‌ای نسبت به دستگاه لخت، در دستگاه بدنی به صورت زیر قابل بیان هستند:
+\begin{equation}
+\begin{split}
+& \vec{V}=u\vec{i}+v\vec{j}+ w\vec{k}, \\
+& \vec{\omega}=p\vec{i} +q\vec{j}+r\vec{k}
+\end{split}
+\end{equation}
+\subsection{معادلات نیرو}
+از آنجا که رابطه
+\eqref{E4}
+ نسبت به دستگاه لخت معتبر است و بردارها در دستگاه بدنی بیان شده‌اند، رابطه مذکور به شکل زیر بازنویسی می‌شود:
+\begin{equation}
+\vec{F}=m \left( {\frac 
+{\rm d}{{\rm d}t}}\vec{V}   \right) _{{a}} =m\left( \left( {\frac 
+{\rm d}{{\rm d}t}}\vec{V}   \right) _{{b}}+\left( \vec{\omega}_{{ b}/{a}}\times \vec{V}   \right)\right)
+\end{equation}
+در این رابطه، زیروند $a$ و $b$ به ترتیب، بیانگر دستگاه لخت و دستگاه بدنی و$  \vec{V}$ و $\vec{\omega}$  به ترتیب سرعت خطی و سرعت زاویه‌ای پهپاد می‌باشند.
+
+بنابراین خواهیم داشت:
+\begin{align}
+& \left( {\frac {\rm d}{{\rm d}t}}\vec{V} \right) _{{b}}=\dot u \vec{i}+\dot v \vec{j}+\dot w \vec{k} \\
+& \vec{\omega} \times \vec{V} = (qw-rv)\vec{i}+(ru-pw)\vec{j}+(pv-qu)\vec{k}
+\end{align}
+و با جمع کردن دو رابطه بالا و تفکیک آنها، نیرو در سه راستای اصلی به شکل زیر حاصل خواهد شد:
+\begin{equation} \label{eq:forceequation}
+\begin{split}
+& f_{{x}}=m\cdot \left( \dot u +qw-vr \right) \\
+& f_{{y}}=m\cdot \left( \dot v +ur-pw \right) \\
+& f_{{z}}=m\cdot \left( \dot w +vp-uq \right)
+\end{split}
+\end{equation}
+\subsection{معادلات ممان}
+\begin{equation}
+\vec{M}= \left( {\frac 
+{\rm d}{{\rm d}t}}\vec{H}   \right) _{{a}} = \left( {\frac 
+{\rm d}{{\rm d}t}}\vec{H}   \right) _{{b}}+\left( \vec{\omega}_{{b}/{a}}\times \vec{H}   \right)
+\end{equation}
+در این رابطه، زیروند $a$ و $b$ به ترتیب، بیانگر دستگاه لخت و دستگاه بدنی است.
+
+مجددا مورد تاکید است که این معادلات نسبت به مرجع لخت محاسبه شده‌اند.
+ $ \vec{\omega} $ و  $ \vec{H} $  در دستگاه بدنی بیان شده‌اند.
+
+در این روابط، بردار $ \vec{H} $ از رابطه زیر به‌دست می‌آید:
+\begin{equation}
+\vec{H}=I{\vec{\omega}}
+\end{equation}
+و تانسور $ I $ به شکل زیر است:
+\begin{equation} 
+I= \left[ \begin {array}{ccc} I_{xx}&0&-I_{xz}\\
+ 0&I_{yy}&0\\ \noalign{\medskip}-I_{zx}&0&I_{zz}
+\end {array} \right] 
+\end{equation}
+که در آن:
+\begin{equation}
+\begin{split}
+&I_{xx}=\int(y^{2}+z^{2}) \,{\rm d}m, \\
+&I_{yy}=\int(x^{2}+z^{2}) \,{\rm d}m, \\
+&I_{zz}=\int(x^{2}+y^{2}) \,{\rm d}m, \\
+&I_{xz}=I_{zx}=\int xz\,{\rm d}m
+\end{split}
+\end{equation}
+همانطور که قبلا ذکر شده بود، پهپاد مورد نظر متقارن فرض شده است.
+
+بنابراین روابط زیر حاصل خواهند شد:
+\begin{align}
+& \vec{H}=(I_{xx} p-I_{xz} r)\vec{i}+(I_{yy} q)\vec{j}+
+(I_{zz} r-I_{zx} p)\vec{k} \\
+&  \left( {\frac 
+{\rm d}{{\rm d}t}}{H}   \right) _{{b}}=I {\dot {\omega}}
+\end{align}
+که منتج به معادلات زیر خواهند شد:
+\begin{equation}\label{ehb}
+ \left( {\frac 
+{\rm d}{{\rm d}t}}\vec{H}   \right) _{{b}}=(I_{xx}\dot p-I_{xz}\dot r)\vec{i}+(I_{yy}\dot q)\vec{j}+
+(I_{zz}\dot r-I_{zx}\dot p)\vec{k}
+\end{equation}
+و
+\begin{equation}\label{eomegah}
+\begin{split}
+\vec{\omega}_{{b}/{a}} \times \vec{H}=&(h_zq-h_yr)\vec{i}+(h_xr-h_zp)\vec{j}+(h_yp-h_xq)\vec{k}\\
+=&(i_{zz}qr-i_{yy}qr-i_{zx}pq)\vec{i}\\
+&+(I_{xx}pr-i_{xz}r^2-i_{zz}pr+i_{zx}p^2)\vec{j}\\
+& +(i_{yy}pq-I_{xx}pq+i_{xz}rq)\vec{k}
+\end{split}
+\end{equation}
+از مجموع دو معادله 
+\eqref{ehb}
+و
+\eqref{eomegah}،
+ معادلات حاصل شده به شکل ذیل خواهد بود:
+\begin{equation}\label{eq:momentequation}
+\begin{split}
+m_{x}&=I_{xx}\dot{p}-I_{xz} \left(pq+\dot r \right) +qr \left( 
+I_{zz}-I_{yy} \right) \\
+m_{y}&=I_{yy}\dot q+I_{xz} \left( {p}^{2}-{r}^{2} \right) 
++pr \left( I_{xx}-I_{zz} \right) \\
+m_{z}&=I_{zz}\dot r-I_{xz}\dot p+pq \left(I_{yy}-I_{xx} \right) +I_{zz}qr
+\end{split}
+\end{equation}
+\subsection{زوایای اولر}\label{euler}
+آنچه از رابطه \ref{eq:forceequation} به‌دست خواهد آمد، بیانگر بردار سرعت خطی در دستگاه بدنی است، درصورتیکه برای پیدا کردن موقعیت پهپاد و طراحی کنترل کننده، نیاز است تا سرعت خطی در دستگاه لخت بیان شود.
+ بنابراین  باید به دنبال ماتریسی بود تا برای حصول هدف مورد نظر به کار گرفته‌شود.
+
+بدین منظور، فرض شده است که دوران های متوالی، به اندازه $ \phi $ ، $ \theta $ و $ \psi $ به ترتیب حول سه محور $x$، $y$ و $z$ صورت پذیرد (که به این نوع دوران، دوران کاردان یا تایت-برایان\LTRfootnote{\lr{Tait Bryan}} گفته می‌شود.).
+شکل ........ حالت کلی دوران اولر را به نمایش گذاشته‌است.
+\begin{figure}[t]
+\centering 
+\includegraphics[width=.45\textwidth]{Picture/EulerRotation.png}
+\caption{دوران اولر}
+\label{pic:EulerRotation} %% label for entire figure
+\end{figure}
+
+\begin{equation}
+\vec{\omega}=\dot \phi \vec{i}_1 + \dot \theta \vec{j}_2+\dot \psi \vec{k}_3
+\end{equation}
+که $ \vec{j}_2 $ بردار $ \vec{j} $  در دستگاهی است که به اندازه $ \phi  $  حول محور $ x  $ نسبت به دستگاه اولیه دوران کرده است.
+به همین ترتیب، $ \vec{k}_3 $ بردار $ \vec{k} $ در دستگاهی است که یک بار به اندازه $ \phi  $  حول محور $ x  $ و متوالیا به اندازه $ \theta  $  حول محور $\vec{j}_2  $  دوران کرده است.
+
+از آنجا که بردار سرعت زاویه‌ای در دستگاه بدنی بیان شده است، رابطه مذکور باید بر حسب بردارهای یکه $ \vec{k}_3 $ و $ \ \vec{j}_3 $ و $ \vec{i}_3 $ بیان شود. با بیان بردارهای یکه در دستگاه بدنی، رابطه زیر به‌دست خواهد آمد\footnote{اثبات رابطه در پیوست \ref{App:EulerOmega} آورده شده است.}:
+\begin{equation} \label{سرعت زاویه ای و زاویه اولر}
+\left[ \begin {array}{c} \omega_{{x}}\\ \noalign{\medskip}\omega_{{y}
+}\\ \noalign{\medskip}\omega_{{z}}\end {array} \right] 
+=
+\left[ \begin {array}{ccc} \cos \left( \theta \right) \cdot \cos
+ \left( \psi \right) &\sin \left( \psi \right) &0\\ \noalign{\medskip}
+-\cos \left( \theta \right) \cdot \sin \left( \psi \right) &\cos
+ \left( \psi \right) &0\\ \noalign{\medskip}\sin \left( \theta
+ \right) &0&1\end {array} \right]
+ \left[ \begin {array}{c} \dot \phi\\ \noalign{\medskip}\dot \theta
+\\ \noalign{\medskip}\dot \psi\end {array} \right]
+\end{equation}
+و برای به‌دست آوردن زوایای کاردان باید عکس ماتریس انتقال را پیش ضرب کنیم که رابطه زیر حاصل می‌شود:
+\begin{equation}
+ \left[ \begin {array}{c} \dot \phi\\ \noalign{\medskip}\dot \theta
+\\ \noalign{\medskip}\dot \psi\end {array} \right]=
+ \left[ \begin {array}{ccc} {\frac {\cos \left( \psi \right) }{\cos
+ \left( \theta \right) }}&-{\frac {\sin \left( \psi \right) }{\cos
+ \left( \theta \right) }}&0\\ \noalign{\medskip}\sin \left( \psi
+ \right) &\cos \left( \psi \right) &0\\ \noalign{\medskip}-\cos
+ \left( \psi \right) \tan \left( \theta \right) &\sin \left( \psi
+ \right) \tan \left( \theta \right) &1\end {array} \right]\left[ \begin {array}{c} \omega_{{x}}\\ \noalign{\medskip}\omega_{{y}
+}\\ \noalign{\medskip}\omega_{{z}}\end {array} \right]
+\end{equation}
+به وضوح مشخص است که ماتریس فوق در ریشه های $\cos \left( \theta \right)$ تعریف نشده است، بنابراین از روابط کواترنین استفاده می‌شود.
+\subsection{ماتریس کسینوس‌های هادی}  
+با توجه به فرضیات بخش \ref{euler}، ماتریس کسینوس‌های هادی\LTRfootnote{\lr{Direction Cosine Matrix(DCM)}} از رابطه زیر به‌دست خواهد آمد:
+\begin{equation} \label{DCM}
+\begin{split}
+DCM=
+&  \left[ 
+\begin {array}{ccc} 1&0&0\\ \noalign{\medskip}0&C\left(\phi
+ \right) &-S \left( \phi \right) \\ \noalign{\medskip}0&S
+ \left( \phi \right) &C \left( \phi \right) \end {array} \right]
+ \left[ \begin {array}{ccc} C \left( \theta \right) &0&S
+ \left( \theta \right) \\ \noalign{\medskip}0&1&0\\ \noalign{\medskip}
+-S \left( \theta \right) &0&C \left( \theta \right) \end {array}
+ \right]    \left[ \begin {array}{ccc} C \left( \psi
+ \right) &-S \left( \psi \right) &0\\ \noalign{\medskip}S
+ \left( \psi \right) &C \left( \psi \right) &0\\ \noalign{\medskip}0
+&0&1\end {array} \right]  \\
+=& \left[ \begin {array}{ccc} C \left( \theta \right) C \left( 
+\psi \right) &-C \left( \theta \right) S \left( \psi \right) &
+S \left( \theta \right) \\ \noalign{\medskip}a &b&-S \left( \phi
+ \right) C \left( \theta \right) \\ \noalign{\medskip}c &d &C \left( \phi
+ \right) C \left( \theta \right) \end {array} \right]
+\end{split}
+\end{equation}
+که در آن
+\begin{equation} \label{DCM2}
+\begin{split}
+& S \left( \alpha \right)=\sin{\alpha}, \ \ C \left( \alpha \right)=\cos{\alpha} \\
+& a=S \left( \phi
+ \right) S \left( \theta \right) C \left( \psi \right) +C
+ \left( \phi \right) S \left( \psi \right)\\
+&  b=-S \left( \phi
+ \right) S \left( \theta \right) S \left( \psi \right) +C
+ \left( \phi \right) C \left( \psi \right) \\
+&  c=-C \left( 
+\phi \right) S \left( \theta \right) C \left( \psi \right) +S
+ \left( \phi \right) S \left( \psi \right)\\
+& d=C \left( \phi
+ \right) S \left( \theta \right) S \left( \psi \right)+ S
+ \left( \phi \right) C \left( \psi \right)
+ \end{split}
+\end{equation}
+\subsection{بدست آوردن زوایای اولر}
+با توجه به روابط \eqref{DCM} و \eqref{DCM2}،  می‌توان زوایای اولر\LTRfootnote{\lr{euler}} را از روی درایه‌های ماتریس به‌دست آورد:
+\begin{equation} \label{زوایای اولر}
+\begin{split}
+& \phi=-{\it atan2} \left( r_{23},r_{33} \right) \\
+& \psi=-{\it atan2} \left( r_{12},r_{11} \right) \\
+& \theta={\it asin} \left( r_{13} \right) 
+\end{split}
+\end{equation}
+\subsection{کواترنین}
+برای حل مشکل اشاره شده در بخش \ref{euler} از روابط کواترنین\LTRfootnote{\lr{quaternion}} استفاده می‌کنیم.
+
+کواترنین یک چهار مؤلفه‌ای است که شامل یک بردار سه بعدی و یک عدد ثابت است و می‌تواند به فرم‌های زیر نوشته شود:
+\begin{subequations}
+\begin{align}
+ & \textbf{q}= \left[ \begin {array}{c} q_{{0}}\\ \noalign{\medskip}q_{{1}}
+\\ \noalign{\medskip}q_{{2}}\\ \noalign{\medskip}q_{{3}}\end {array}
+ \right]=
+ \left[\begin{array}{c}
+\cos{\dfrac{\theta}{2}}\\
+u_1\sin{\dfrac{\theta}{2}}\\
+u_2\sin{\dfrac{\theta}{2}}\\
+u_3\sin{\dfrac{\theta}{2}}
+\end{array}\right] \label{quat1}\\
+& \textbf{q}=\cos{\dfrac{\theta}{2}}+\sin{\dfrac{\theta}{2}}\vec{u} \label{quat2}
+\end{align}
+\end{subequations}
+که در آن $ \vec u $ بردار یکه‌ی نشان دهنده‌ی محور دوران می‌باشد.
+\begin{equation}
+\vec{u}=u_1\vec{i}+u_2\vec{j}+u_3\vec{k}
+\end{equation}
+\begin{lemma} \label{lem}
+با استفاده از قواعد زیر و فرمول \eqref{quat2} می‌توان به راحتی حاصل ضرب بردار در کواترنین را به‌دست آورد. 
+\begin{equation}
+\begin{split}
+&\vec{i} \ ^{2}=\vec{j} \ ^{2}=\vec{k} \ ^{2}=-1,\\
+&\vec{i} \ \vec{j}=\vec{k},\vec{j} \ \vec{k}=\vec{i},\vec{k} \ \vec{i}=\vec{j},\\
+&\vec{j} \ \vec{i}=-\vec{k},\vec{k} \ \vec{j}=-\vec{i},\vec{i} \ \vec{k}=-\vec{j}
+\end{split}
+\end{equation}
+\end{lemma}
+\subsubsection{رابطه بین کواترنین و سرعت زاویه‌ای}
+رابطه بین کواترنین و سرعت زاویه‌ای بیان شده در دستگاه بدنی به فرم زیر خواهد بود\footnote{اثبات رابطه در پیوست \ref{اثبات رابطه کواترنین و سرعت زاویه‌ای } آورده شده است.}:\cite{diebel2006representing}
+ 
+\begin{equation} \label{کواترنین و سرعت زاویه‌ای}
+\dot{ \textbf{q}}=\dfrac{1}{2} \vec \omega .\textbf{q}
+\end{equation}
+با بسط دادن آن و استفاده از لم \eqref{lem} روابط زیر حاصل خواهد شد:
+\begin{equation}
+\begin{split}
+\dot q_{{0}}&=-\dfrac{1}{2} \left( q_{{1}}p+q_{{2}}q+q_{{3}}r \right)  \\
+\dot q_{{1}}&=\dfrac{1}{2} \left( q_{{0}}p+q_{{2}}r-q_{{3}}q \right)  \\
+\dot q_{{2}}&=\dfrac{1}{2} \left( q_{{0}}q+q_{{3}}p-q_{{1}}r \right)  \\
+\dot q_{{3}}&=\dfrac{1}{2} \left( q_{{0}}r+q_{{1}}q-q_{{2}}p \right) 
+\end{split}
+\end{equation}
+در این رابطه، $ p , q , r $  مؤلفه‌های سرعت زاویه‌ای در دستگاه بدنی می‌باشند.
+\subsubsection{کواترنین و ماتریس کسینوس‌های هادی}
+دورانی که توسط بردار دوران و زاویه دوران بیان شود، به دوران زاویه-محور
+\LTRfootnote{ \lr{Angle-Axis Rotation}}
+ معروف است. ماتریس دوران مربوطه از لم زیر به‌دست می‌آید.
+\begin{lemma} \label{رودریگز}
+ماتریس دورانی که توسط بردار یکه دوران و محور دوران، دستگاه مختصات بدنی را به دستگاه لخت تبدیل می‌کند از رابطه زیر به‌دست می‌آید:{\cite{jazar2011advanced}}
+\begin{equation}
+DCM=I \ cos{\phi}+2\vec{u}\vec{u}^T\sin^2{\dfrac{\phi}{2}}+\tilde{U}\sin{\phi}
+\end{equation}
+که در این رابطه $ \phi $ زاویه دوران، $ \vec{u} $ محور یکه دوران و $\tilde{U}$  ماتریس پاد متقارنی است که از رابطه زیر به‌دست می‌آید:
+\begin{equation}
+\tilde{U}= \left[ \begin {array}{ccc} 0&-u_{3}&u_{2}\\ \noalign{\medskip}u_{3}&0
+&-u_{1}\\ \noalign{\medskip}-u_{2}&u_{1}&0\end {array} \right]
+\end{equation}
+\end{lemma}
+لم فوق به رابطه رودریگز\LTRfootnote{Rodrigues} معروف است. 
+برای استفاده از لم \eqref{رودریگز} توسط کواترنین، ابتدا رابطه مذکور به شکل زیر بازنویسی شده است:
+\begin{equation} \label{رودریگز اصلاح شده}
+DCM=(2\cos^2{\dfrac{\phi}{2}}-1)I+2\vec{u}\vec{u}^T\sin^2{\dfrac{\phi}{2}}+2\tilde{U}\sin{\dfrac{\phi}{2}}\cos{\dfrac{\phi}{2}}
+\end{equation}
+سپس با بکارگیری رابطه \eqref{quat1} به شکل زیر:
+\begin{equation}
+\begin{split}
+& q_0=\cos{\dfrac{\phi}{2}}\\
+& q_1\vec{i}+q_2\vec{j}+q_3\vec{k}=\vec{u}\sin{\dfrac{\phi}{2}}\\
+& q_0^2+q_1^2+q_2^2+q_3^2=1
+\end{split}
+\end{equation}
+ رابطه \eqref{رودریگز اصلاح شده} با پارامترهای کواترنین ظاهر خواهد شد:
+\begin{equation} \label{رودریگز-کواترنین}
+\begin{split}
+DCM=	&(2q_0^2-1) I+2\acute{\vec{q}} \ \acute{\vec{q}}^T+2q_0\tilde{Q}\\
+			=&(q_0^2-{\acute{\vec{q}}}^2) I+2\acute{\vec{q}} \ \acute{\vec{q}}^T+2q_0\tilde{Q}
+\end{split}
+\end{equation}
+که $ \tilde{Q} $ و $ \acute{\vec{q}} $ عبارتند از:
+\begin{equation}
+\begin{split}
+& \acute{\vec{q}}=q_1\vec{i}+q_2\vec{j}+q_3\vec{k};\\
+& \tilde{Q}=\left[ \begin {array}{ccc} 0&-q_{3}&q_{2}\\ \noalign{\medskip}q_{3}&0
+&-q_{1}\\ \noalign{\medskip}-q_{2}&q_{1}&0\end {array} \right]
+\end{split}
+\end{equation}
+با بسط دادن رابطه \eqref{رودریگز-کواترنین}، ماتریس کسینوس‌های هادی حاصل خواهد شد:
+\begin{equation}
+\begin{split}
+&DCM=\\
+ &\left[ \begin {array}{ccc} {q_{{0}}}^{2}+{q_{{
+1}}}^{2}-{q_{{2}}}^{2}-{q_{{3}}}^{2}&-2\,q_{{0}}q_{{3}}+2\,q_{{1}}q_{{
+2}}&2\,q_{{0}}q_{{2}}+2\,q_{{1}}q_{{3}}\\ \noalign{\medskip}2\,q_{{0}}
+q_{{3}}+2\,q_{{1}}q_{{2}}&{q_{{0}}}^{2}-{q_{{1}}}^{2}+{q_{{2}}}^{2}-{q
+_{{3}}}^{2}&-2\,q_{{0}}q_{{1}}+2\,q_{{3}}q_{{2}}\\ \noalign{\medskip}-
+2\,q_{{0}}q_{{2}}+2\,q_{{1}}q_{{3}}&2\,q_{{0}}q_{{1}}+2\,q_{{3}}q_{{2
+}}&{q_{{0}}}^{2}-{q_{{1}}}^{2}-{q_{{2}}}^{2}+{q_{{3}}}^{2}\end {array}
+ \right]
+ \end{split}
+\end{equation}
+\subsubsection{کواترنین و زوایای اولر}
+با مراجعه به رابطه \eqref{زوایای اولر} به سادگی می‌توان روابط را مجددا بر حسب پارامترهای کواترنین بازنویسی کرد:
+\begin{equation}
+\begin{split}
+& \phi=-{\it atan2} \left( -2\,q_{0}\,q_{1}+2\,q_{2}\,q_{3},{q_{0}}^{2}-{q
+_{1}}^{2}-{q_{2}}^{2}+{q_{3}}^{2} \right) \\
+& \psi=-{\it atan2} \left( -2\,q_{0}\,q_{3}+2\,q_{1}\,q_{2},{q_{0}}^{2}+{q
+_{1}}^{2}-{q_{2}}^{2}-{q_{3}}^{2} \right) \\
+& \theta={\it asin} \left( 2\,q_{0}\,q_{2}+2\,q_{1}\,q_{3} \right) 
+\end{split}
+\end{equation}
+\section{ نیروها و گشتاورهای وارد بر پرنده بدون سرنشین  }
+
+\subsection{نیروی جاذبه}
+از آنجا که مبدا مختصات بدنی بر مرکز جرم پرنده واقع شده‌است، نیروی وزن حول محور‌های مختصات بدنی گشتاور ندارد:
+\begin{equation}
+ {m_x}_{mg}={m_y}_{mg} ={m_z}_{mg} =0
+\end{equation}
+زمانیکه پرنده در حالت پرواز در موقعیت سطح بال\LTRfootnote{\lr{level flight}} است\footnote{موقعیتی است که نیروی وزن در در راستای جانبی مؤلفه ندارد.} و با یک زاویه اولیه نسبت به افق در حرکت است، نیروی وزن از رابطه زیر به‌دست می‌آید:
+\begin{equation}
+\left[ \begin {array}{c} {f_x}_{{{\it mg}}}\\ \noalign{\medskip}{f_y}_{{{\it 
+mg}}}\\ \noalign{\medskip}{f_z}_{{{\it mg}}}\end {array} \right] = \left[ 
+\begin {array}{c} -{\it mgsin} \left( \theta_{{e}} \right) 
+\\ \noalign{\medskip}0\\ \noalign{\medskip}{\it mgcos} \left( \theta_{
+{e}} \right) \end {array} \right]
+\end{equation}
+که $\theta_e$، زاویه محور طولی پرنده با افق در این حالت می‌باشد. 
+
+اما برای بیان نیروی وزن در حالت کلی، باید اجزای اولیه در ترانهاده ماتریس کسینوس‌های هادی پیش‌ضرب شوند.
+پس از انجام عملیات فوق، بردار وزن بیان شده در دستگاه بدنی به‌دست خواهد آمد که عبارتست از:
+\begin{equation}
+ \left[ \begin {array}{c} {f_x}_{{mg}}\\ \noalign{\medskip}{f_y}_{{mg}}
+\\ \noalign{\medskip}{f_z}_{{mg}}\end {array} \right] = \left[ 
+\begin {array}{c} -\cos{\theta} \cos{\psi} \,{\it mg}\sin{\theta _e}-\sin\theta \,{
+\it mg}\cos{\theta _e}\\ \noalign{\medskip}- \left( \sin{\phi} \sin{\theta} \cos{
+\psi} -\cos{\phi} \sin{\psi}  \right) {\it mg}\sin{\theta_e}+\sin{\phi} \cos{\theta} \,{
+\it mg}\cos{\theta_e}\\ \noalign{\medskip}- \left( \cos{\phi} \sin{\theta} \cos{
+\psi} +\sin{\phi} \sin{\psi}  \right) {\it mg}\sin{\theta_e}+\cos{\phi} \cos{\theta} \,{
+\it mg}\cos{\theta_e}\end {array} \right] 
+\end{equation}
+\subsection{عملگرهای کنترلی}
+در پرنده مورد بررسی، شش عملگر کنترلی وجود دارد که عبارتند از:
+\subsubsection{دریچه کنترل سوخت}
+برای کنترل سرعت پرنده مورد استفاده قرار می‌گیرد.
+محدوده عملکرد این دریچه بین 0 تا 1 می‌باشد و هر چه مقدار بیشتر باشد، سوخت بیشتری تزریق شده و طبیعتا سرعت هواپیما بیشتر خواهد بود.
+\subsubsection{شهپر}
+بالچه‌هایی هستند که در دو انتهای بال‌های اصلی قرار می‌گیرند و به صورت مزدوج عمل می‌کنند، یعنی هنگامیکه یکی از بالچه‌ها پایین می‌آید، شهپر\LTRfootnote{aileron} سمت مخالف، بالا می‌رود و باعث می‌شود هواپیما حول محور اولیه خود بچرخد.
+ در حقیقت، این دو عملگر با ایجاد یک کوپل چرخشی باعث ایجاد چرخش هواپیما حول محور اول می‌شوند.
+\subsubsection{فلپ}
+فلپ\LTRfootnote{flap} در لبه پشتی بال‌های اصلی تعبیه شده است. 
+این سطح کنترل بیشینه ضریب بالابری\LTRfootnote{lift} را بالا برده و بنابراین باعث کاهش سرعت استال\LTRfootnote{stall} می‌شود.
+معمولا در سرعت کم و زاویه حمله بالا هنگام فرود یا برخاستن هواپیما مورد استفاده قرار می‌گیرد.
+\subsubsection{دم عمودی}
+این بالچه\LTRfootnote{rudder} بر روی پایدارکننده عمودی یا دم عمودی پرنده قرار دارد.
+چرخش پرنده حول محور عمود بر آن توسط این بالچه تامین می‌شود.
+این بالچه بر خلاف دو بالچه دیگر مزدوج نیست و فقط یک زائده است که به انتهای دم عمودی لولا شده و می‌تواند بچرخد. 
+\subsubsection{بالابر}
+کار این بالابر\LTRfootnote{elevator}، پایدار کردن وچرخاندن هواپیما حول محور جانبی خود است.
+این بالک‌ها که در انتهای دم کوچک هواپیما قرار دارند برخلاف شهپرها با هم عمل می‌کنند.
+هنگامیکه این بالچه‌ها بالا می‌آیند، گشتاوری مثبت ایجاد می‌شود و نوک هواپیما را به سمت بالا می‌آورد و هنگامیکه این بالچه‌ها به سمت پایین می‌آیند، گشتاوری منفی ایجاد شده و نوک هواپیما را به سمت پایین می‌آورد.
+\subsubsection{پایدارکننده دم افقی}
+پایدارکننده دم افقی\LTRfootnote{stabilator}، بیشینه ضریب پسا\LTRfootnote{drag} را بالا می‌برد و همانگونه که از نام آن بر‌می‌آید، پایدارکننده بالابر می‌باشد. 
+
+در شکل \ref{pic:actuators} می‌توان عملگرهای اصلی کنترلی را ملاحظه نمود.
+\begin{figure}[t]
+\centering 
+\subfigure[شهپر]{\includegraphics[width=.45\textwidth]{Picture/aileron.jpg}}
+%\hspace{2mm}
+\subfigure[دم عمودی]{\includegraphics[width=.45\textwidth]{Picture/rudder.jpg}}
+\caption{عملگرهای اصلی کنترلی}
+\label{pic:actuators} %% label for entire figure
+\end{figure}
+البته عملگرهای کنترلی یک پرنده در حالت کلی، به این موارد محدود نمی‌شود و به تعداد مورد نیاز برای آن‌ها عملگر کنترلی در نظر خواهند گرفت.
+
+کنترل طولی با استفاده از جابجایی متقارن پایدارکننده‌ها صورت می‌گیرد.
+در حرکت جانبی، کنترل زاویه غلت\LTRfootnote{roll} با استفاده از شهپرها وکنترل زاویه یاو\LTRfootnote{yaw} با استفاده از دم عمودی امکان‌پذیر می‌باشد.
+
+جدول \ref{مشخصات عملگرها} مدل ریاضی و محدوده تغییرات این عملگرها را نشان می‌دهد
+\cite{Khalighi2016xepersian}
+.
+\begin{table}
+\centering%
+\caption{مشخصات عملگرها}\label{مشخصات عملگرها}
+\begin{tabular}{|c|c|c|c| }
+  \hline  
+  عملگر&محدوده نرخ تغییر& عملگر & محدوده نرخ تغییر\\
+  \hline
+  پایدارکننده($\delta_{stab}$)&$^{\circ}$ 10 , $^{\circ}$ 24-& بالابر($\delta_{elevator}$) &  $^{\circ}$ 25 , $^{\circ}$ 10-\\
+  \hline
+  شهپر($\delta_{ail}$)&$^{\circ}$ 45 , $^{\circ}$ 25- & فلپ($\delta_{flap}$) & $^{\circ}$ 60 , $^{\circ}$ 60- \\
+  \hline
+  دم عمودی($\delta_{rud}$)& $^{\circ}$ 30 , $^{\circ}$ 30- & دریچه کنترل سوخت ($\delta_t$)& ۰-۱۰۰\\
+  \hline
+\end{tabular}
+\end{table}
+\section{نیروی پیش‌ران }
+همانطور که ذکر شد، محدوده عملکرد دریچه کنترل سوخت بین 0 تا 1 می‌باشد\LTRfootnote{$ 0\le \delta_t \le 1 $}.
+رابطه‌ی بیانگر معادله دینامیکی پیش‌ران\LTRfootnote{thrust} به صورت زیر قابل بیان است
+\cite{Khalighi2015xepersian}
+:
+\begin{equation}
+f_{thrust}=t_{max}.\dfrac{\rho}{\rho_{sl}}.\delta_t
+\end{equation}
+لازم به یادآوری است که در این رابطه، $ f_{thrust} $ بیان شده در دستگاه مختصات بدنی است.
+مقادیر
+ $ \rho, \rho_{sl}, \delta_t $
+ از جدول \ref{tab:thrust} اخذ می‌شوند.
+\begin{table}
+	\centering%
+	\caption{اطلاعات مربوط به نیروی پیش‌ران}\label{tab:thrust}
+	\begin{tabular}{ |c|c|c|c| }
+		\hline
+		نام  &  نماد & مقدار & واحد \\
+		\hline
+		چگالی هوا در منطقه پرواز  & $\rho$  & ۱٫۲۰۴۱ & $^3$kg/m \\
+		\hline
+		چگالی هوا در سطح دریا & $\rho_{sl}$ & ۱٫۲۲۵ & $^3$kg/m \\
+		\hline
+		بیشینه نیروی پیش‌ران بی بعد شده  & $\hat{t}_{max}$ & ۲٫۰۱ & ۱\\
+		\hline
+	\end{tabular}
+\end{table}
+\section{نیروها وگشتاورهای آئرودینامیکی}
+در این قسمت به بررسی داده‌ها و روابط آئرودینامیکی پرداخته شده است.
+داده‌های موجود برای هر پرنده متفاوت است و می‌توان از منابع مختلفی آن‌ها را به‌دست آورد.
+روش استفاده شده در این پایان نامه، استخراج آن‌ها از مقالات و مدارک معتبر می‌باشد
+\cite{chakraborty2010linear}
+. 
+
+ حرکت هواپیما بستگی به تاثیر نیروها و گشتاورهای آئرودینامیکی بر آن دارد. 
+ نیروهای آئرودینامیکی شامل نیروی پسا، برا و نیروی جانبی می‌باشد. 
+ گشتاورهای آئرودینامیکی نیز عبارتند از گشتاور پیچ، گشتاور غلت و گشتاور یاو.
+ این نیروها و گشتاورها بستگی به نرخ تغییرات زاویه‌، زوایای آئرودینامیکی و تغییرات سطوح کنترلی دارند.
+ \subsection{زوایای آئرودینامیکی }\label{AerodynamicAngles}
+نیروها و گشتاورهای آئرودینامیکی یک پرنده به دلیل حرکت پرنده نسبت به جریان هوا ایجاد می‌شوند.
+ بنابراین، این نیروها و گشتاورها بستگی به جهت پرنده نسبت به جهت جریان هوا دارند.
+  در جریان پایا، نیروها و گشتاورها، با چرخش حول بردار سرعت جریان آزاد دستخوش تغییر نمی‌شوند.
+ پس برای بیان آن‌ها به دو جهت و زوایای مربوط به آن‌ها نیاز است.
+\subsubsection{زاویه حمله}  
+  اولین زاویه، زاویه حمله%
+  \LTRfootnote{\lr{Angle of attack ($ \alpha $)}}
+  است که زاویه مابین تصویر سرعت جریان هوا  (که در راستای محور $x$ در دستگاه باد است) بر صفحه $x_{{\it b}}oz_{{\it b}}$ و محور $x_{{\it b}}$ می‌باشد.
+  \subsubsection{زاویه شیب جانبی}
+ زاویه شیب جانبی%
+ \LTRfootnote{\lr{Sideslip angle ($ \beta $)}}
+که زاویه مابین سرعت جریان هوا  $V_{{\it T}}$ و تصویر این سرعت بر صفحه $x_{{\it b}}oz_{{\it b}}$ می‌باشد.
+
+این زوایا به زوایای آئرودینامیکی معروفند که در شکل \ref{pic:AerodynamicAngle}  به نمایش در آمده‌اند.
+  \begin{figure}
+  	\center
+  	\includegraphics[width=4in,height=2in]{Picture/uav.png}
+  	\caption{زوایای آئرودینامیکی} \label{pic:AerodynamicAngle}
+  \end{figure}
+\subsection{ماتریس انتقال از مختصات بدنی به باد}
+با توجه به توضیحات ارائه شده در \ref{AerodynamicAngles} می‌توان دریافت که برای انتقال از دستگاه مختصات باد به دستگاه مختصات بدنی باید دو دوران متوالی به ترتیب به اندازه $ \alpha $  حول محور $ y $ و به اندازه $ \beta $ حول محور $ z $ انجام شود.\cite{stevens2003aircraft}
+
+ماتریس‌های انتقال عبارت خواهند بود از:
+\begin{equation}
+R_y=\begin{bmatrix}
+\cos{\alpha} & 0 & \sin{\alpha}  \\
+0 & 1 &0  \\
+- \sin{\alpha} &0 &\cos{\alpha}
+\end{bmatrix} ;
+R_x=\begin{bmatrix}
+\cos{\beta} & \sin{\beta} & 0  \\
+-\sin{\beta} & \cos{\beta} &0  \\
+0 &0 &1
+\end{bmatrix}
+\end{equation}
+بنابراین با ضرب کردن ماتریس‌های فوق، می‌توان ماتریس انتقال را به‌دست آورد:
+\begin{equation}\label{eq:wind2body}
+R_{w/b}= \left[ \begin {array}{ccc} \cos{\alpha} \cos{\beta} &\sin{\beta} &\sin{\alpha} \cos{\beta} 
+\\ \noalign{\medskip}-\cos{\alpha} \sin{\beta} &\cos{\beta} &-\sin{\alpha} \sin{\beta} 
+\\ \noalign{\medskip}-\sin{\alpha} &0&\cos{\alpha} \end {array} \right]
+\end{equation}
+\subsection{نیروهای پسا، برا و نیروی جانبی}
+فشار دینامیکی طبق رابطه زیر تعریف می‌شود:
+\begin{equation}
+\overline{q}=\dfrac{1}{2} \rho V^{2}
+\end{equation}
+که $\rho$ چگالی هوا و واحد آن
+ $kg/m^{3}$
+  می‌باشد.
+
+نیروهای آئرودینامیکی از روابط زیر محاسبه می‌شوند:
+\begin{equation}\label{eq:Faero}
+\begin{split}
+&f_x= \overline{q}SC_{D}(\alpha,\beta,\delta_{stab})\\
+&f_y= \overline{q}SC_{Y}(\alpha,\beta,\delta_{ail},\delta_{rud})\\
+&f_z= \overline{q}SC_{L}(\alpha,\beta,\delta_{stab})
+\end{split}
+\end{equation} 
+به طور کلی، ضرایب آئرودینامیکی از سه بخش تشکیل شده‌اند. 
+بخش اول که به بخش پایه معروف است مربوط به حالتی است که اثرات ناشی از ورودی‌های کنترلی و میرایی ناشی از نرخ تغییرات زاویه‌ای بی‌بعد در نظر گرفته نشده است. 
+بخش دوم تاثیر ورودی‌های کنترلی را بیان می‌کند و بخش سوم اثر میرایی ناشی از نرخ تغییرات زاویه‌ای را مشخص می‌کند. 
+با این تفاسیر ضریب بدون بعد نیروهای آئرودینامیکی به صورت زیر خواهد بود:
+\begin{equation}
+\begin{split}
+&C_{D}(\alpha,\beta,\delta_{stab})=C_{D,basic}(\alpha,\beta)+C_{D,control}(\alpha,\delta_{stab})\\
+&C_{L}(\alpha,\beta,\delta_{stab})=C_{L,basic}(\alpha,\beta)+C_{L,control}(\alpha,\delta_{stab})\\
+&C_{Y}(\alpha,\beta,\delta_{ail},\delta_{rud})=C_{Y,basic}(\alpha,\beta)+C_{Y,control}(\alpha,\delta_{ail},\delta_{rud})\\
+\end{split}
+\end{equation}
+با بسط دادن سمت راست معادلات فوق خواهیم داشت:
+\begin{equation}
+\begin{split}
+&\begin{split}
+C_{D}(\alpha,\beta,\delta_{stab})= &(C_{D_{\alpha_{4}}}\alpha^{4}+C_{D_{\alpha_{3}}}\alpha^{3}+C_{D_{\alpha_{2}}}\alpha^{2}
++C_{D_{\alpha_{1}}}\alpha +C_{D_{\alpha0}})cos\beta  \\
+&+C_{D0}+(C_{D_{\delta_{stab3}}}\alpha^{3}+C_{D_{\delta_{stab2}}}\alpha^{2}
++C_{D_{\delta_{stab1}}}\alpha +C_{D_{\delta_{stab0}}})\delta_{stab}\\
+&+(C_{D_{\delta_{el3}}}\alpha^{3}+C_{D_{\delta_{el2}}}\alpha^{2}
++C_{D_{\delta_{el1}}}\alpha +C_{D_{\delta_{el0}}})\delta_{el}
+\end{split} \\
+&\begin{split}
+C_{L}(\alpha,\beta,\delta_{stab})= &(C_{L_{\alpha_{3}}}\alpha^{3}+C_{L_{\alpha_{2}}}\alpha^{2}
++C_{L_{\alpha_{1}}}\alpha +C_{L_{\alpha0}})cos(2\beta  /3 ) \\
+&+(C_{L_{\delta_{stab3}}}\alpha^{3}+C_{L_{\delta_{stab2}}}\alpha^{2}
++C_{L_{\delta_{stab1}}}\alpha +C_{L_{\delta_{stab0}}})\delta_{stab}\\
+&+(C_{L_{\delta_{el3}}}\alpha^{3}+C_{L_{\delta_{el2}}}\alpha^{2}
++C_{L_{\delta_{el1}}}\alpha +C_{L_{\delta_{el0}}})\delta_{el}
+\end{split} \\
+&\begin{split}
+C_{Y}(\alpha,\beta,\delta_{ail},\delta_{rud})=&(C_{Y_{\beta_{2}}}\alpha^{2}+C_{Y_{\beta_{1}}}\alpha +C_{Y_{\beta_{0}}})\beta \\
+&+(C_{Y_{\delta_{ail_{3}}}}\alpha^{3}+C_{Y_{\delta_{ail_{2}}}}\alpha^{2}+C_{Y_{\delta_{ail_{1}}}}\alpha + C_{Y_{\delta_{ail_{0}}}})\delta_{ail}\\
+&+(C_{Y_{\delta_{rud_{3}}}}\alpha^{3}+C_{Y_{\delta_{rud_{2}}}}\alpha^{2}+C_{Y_{\delta_{rud_{1}}}}\alpha + C_{Y_{\delta_{rud_{0}}}})\delta_{rud}\\
+&+(C_{Y_{\delta_{flap_{2}}}}\alpha^{2}+C_{Y_{\delta_{flap_{1}}}}\alpha + C_{Y_{\delta_{flap_{0}}}})\delta_{flap}
+\end{split}
+\end{split}
+\end{equation}
+ثوابت موجود در معادلات فوق در جداول \ref{داده‌های مربوط به ضریب نیروی دراگ} تا  \ref{داده‌های مربوط به ضریب نیروی جانبی} آورده شده‌اند.
+\begin{table}
+	\centering%
+	\caption{داده‌های مربوط به ضریب نیروی دراگ}\label{داده‌های مربوط به ضریب نیروی دراگ}
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{2}{|c|}{مشتق‌گیرهای کنترلی} &ضرایب پایه \\ \hline
+		۴٫۳۴۸۷ $C_{D_{\delta_{el3}}}=-$ & 3٫8578$C_{D_{\delta_{stab3}}}=-$ & 1٫4610$C_{D_{\alpha_{4}}}= $\\
+		\hline
+		۳٫۴۹۷ $C_{D_{\delta_{el2}}}=$ & 4٫236$C_{D_{\delta_{stab2}}}=$& 5٫7341$C_{D_{\alpha_{3}}}=-$\\
+		\hline
+		0٫۵۰۹۱ $C_{D_{\delta_{el1}}}=-$ & 0٫2739$C_{D_{\delta_{stab1}}}=-$ &6٫3971$C_{D_{\alpha_{2}}}= $\\
+		\hline
+		۳٫۸۹۶ $C_{D_{\delta_{el0}}}=$  & 0٫0366$C_{D_{\delta_{stab0}}}=$ & 0٫1995$C_{D_{\alpha_{1}}}=-$\\
+		\hline
+		& & 1٫4994$C_{D_{\alpha0}}=-$\\
+		\hline
+		& & 1٫5036$C_{D0}=$\\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{table}
+	\centering%
+	\caption{داده‌های مربوط به ضریب نیروی لیفت }\label{داده‌های مربوط به ضریب نیروی لیفت  }
+	\begin{tabular}{|c |c|c| }
+		\hline
+		\multicolumn{2}{|c|}{مشتق‌گیرهای کنترلی} & ضرایب پایه \\ \hline
+		۰٫۰۰۱$C_{L_{\delta_{el3}}}=$ & 2٫1852$C_{L_{\delta_{stab3}}}=$& 1٫1645$C_{L_{\alpha_{3}}}=$\\
+		\hline
+		۱٫۳۳۶5$C_{L_{\delta_{el2}}}=-$ & 2٫6975$C_{L_{\delta_{stab2}}}=-$ &5٫4246$C_{L_{\alpha_{2}}}=-$\\
+		\hline
+		0٫4۱۳5$C_{L_{\delta_{el1}}}=$ & 0٫4055$C_{L_{\delta_{stab1}}}=$ & 5٫6770$C_{L_{\alpha_{1}}}=$\\
+		\hline
+		۴٫۱۳۷$ C_{L_{\delta_{el0}}}=$ & 0٫5725$ C_{L_{\delta_{stab0}}}=$ &  0٫0204$C_{L_{\alpha_{0}}}=-$\\
+		\hline
+	\end{tabular}
+\end{table}
+\begin{table}
+	\centering%
+	\caption{داده‌های مربوط به ضریب نیروی جانبی}\label{داده‌های مربوط به ضریب نیروی جانبی}
+	\begin{tabular}{ |c|c|c| }
+		\hline
+		\multicolumn{2}{|c|}{مشتق‌گیرهای کنترلی}&ضرایب پایه \\ \hline
+		0٫4803$C_{Y_{\delta_{flap2}}}=-$ & 0٫85$C_{Y_{\delta_{ail3}}}=-$ & 0٫1926$C_{Y_{\beta_{2}}}= -$\\
+		\hline
+		0٫3803$C_{Y_{\delta_{flap1}}}=-$  & 0٫2403$C_{Y_{\delta_{ail2}}}=-$& 0٫2654$C_{Y_{\beta_{1}}}=$\\
+		\hline
+		0٫3256$C_{Y_{\delta_{flap0}}}=-$ & 0٫2403$C_{Y_{\delta_{ail1}}}=-$ & 0٫7344$C_{Y_{\beta_{0}}}=- $\\
+		\hline
+		   & 0٫1656$C_{Y_{\delta_{ail0}}}=-$ & \\
+		\hline
+		 & 0٫9351$C_{Y_{\delta_{rud3}}}=$ & \\
+		\hline
+		 & 1٫6921$C_{Y_{\delta_{rud2}}}=-$& \\
+		\hline
+		 & 0٫4082$C_{Y_{\delta_{rud1}}}=$ &\\
+		\hline
+		 & 0٫2054$C_{Y_{\delta_{rud0}}}=$ & \\
+		\hline
+	\end{tabular}
+\end{table}
+
+نیروهای آئرودینامیکی، در دستگاه مختصات باد بیان شده‌اند.
+ با توجه به اینکه  بیان معادلات جسم صلب پرنده بدون سرنشین در دستگاه مختصات بدنی  بوده است، باید این نیروها  نیز در دستگاه مختصات بدنی بیان گردند که این کار با استفاده از ماتریس تبدیل دستگاه باد به بدنی ، رابطه
+  \eqref{eq:wind2body}
+   امکان پذیر است.
+\subsection{گشتاورهای آئرودینامیکی}
+گشتاورهای آئرودینامیکی عبارتند از گشتاور غلت
+\LTRfootnote{$ m_x $}
+، گشتاور پیچ
+\LTRfootnote{$ m_y $}
+ ، و گشتاور یاو
+ \LTRfootnote{$ m_z $}
+  که با استفاده از روابط \eqref{eq:Momentum} بدست می‌آیند.
+\begin{equation}\label{eq:Momentum}
+\begin{split}
+&m_x= \overline{q}s\overline{c}C_{l}(\alpha,\beta,\delta_{ail},\delta_{rud},p,r,V)\\
+&m_y= \overline{q}sbC_{M}(\alpha ,q,V,\delta_{stab})\\
+&m_z= \overline{q}sbC_{n}(\alpha,\beta,\delta_{ail},\delta_{rud},p,r,V)
+\end{split}
+\end{equation}
+با توجه به توضیحات داده‌شده در بخش نیروهای آئرودینامیکی در مورد ضرایب بدون بعد، این ضرایب برای گشتاورها به صورت روابط \eqref{ضرایب گشتاورها}  قابل بیان است.
+\begin{equation}\label{ضرایب گشتاورها}
+\begin{split}
+&C_{M}(\alpha,\beta,\delta_{stab},V)=C_{M,basic}(\alpha)+C_{M,control}(\alpha,\delta_{stab})+C_{M,rate(\alpha ,q,V)}\\
+&C_{l}(\alpha,\beta,\delta_{ail},\delta_{rud},V)=C_{l,basic}(\alpha,\beta)+C_{l,control}(\alpha,\delta_{rud},\delta_{ail})+C_{l,rate}(\alpha ,p,r,V)\\
+&C_{n}(\alpha,\beta,\delta_{ail},\delta_{rud},V)=C_{n,basic}(\alpha,\beta)+C_{n,control}(\alpha,\delta_{rud},\delta_{ail})+C_{n,rate}(\alpha ,p,r,V)\\
+\end{split}
+\end{equation}
+پس از بسط روابط  \eqref{ضرایب گشتاورها} بر حسب ضرایب پایه و مشتق‌گیرهای کنترلی و میرایی ،روابط  زیر حاصل می‌گردد.
+\begin{equation}
+\begin{split}
+&\begin{split}
+C_{M}(\alpha,\beta,\delta_{stab},V)=&(C_{m_{\alpha_{2}}}\alpha^{2}+C_{m_{\alpha_{1}}}\alpha +C_{m_{\alpha_{0}}})\\
+&+(C_{m\delta_{stab_{2}}}\alpha^{2}+C_{m\delta_{stab_{1}}}\alpha +C_{m\delta_{stab_{0}}})\delta_{stab}\\
+&+(C_{m\delta_{el_{2}}}\alpha^{2}+C_{m\delta_{el_{1}}}\alpha +C_{m\delta_{el_{0}}})\delta_{el}\\
+&+\overline{c}/2V(C_{m_{q_{3}}}\alpha^{3}+C_{m_{q_{2}}}\alpha^{2}+C_{m_{q_{1}}}\alpha +C_{m_{q_{0}}})q
+\end{split} \\
+&\begin{split}
+C_{l}(\alpha , \beta , \delta _{ail},\delta _{rud},V)=&(C_{l_{\beta _{4}}}\alpha ^{4}+C_{l_{\beta _{3}}}\alpha^{3}+C_{l_{\beta _{2}}}\alpha ^{2}+
+C_{l_{\beta _{1}}}\alpha + C_{l_{\beta _{0}}})\beta \\
+& +(C_{l_{\delta _{ail_{3}}}}\alpha ^{3}+C_{l_{\delta _{ail_{2}}}}\alpha ^{2}+
+C_{l_{\delta _{ail_{1}}}}\alpha + C_{l_{\delta _{ail_{0}}}})\delta _{ail}\\
+& +(C_{l_{\delta _{flap_{2}}}}\alpha ^{2}+
+C_{l_{\delta _{flap_{1}}}}\alpha + C_{l_{\delta _{flap_{0}}}})\delta _{flap}\\
+&+(C_{l_{\delta _{rud_{3}}}}\alpha ^{3}+C_{l_{\delta _{rud_{2}}}}\alpha ^{2}+
+C_{l_{\delta _{rud_{1}}}}\alpha + C_{l_{\delta _{rud_{0}}}})\delta _{rud}\\
+&+ b/2V(C_{l_{p1}}\alpha +C_{l_{p0}})p+b/2V(C_{l_{r2}}\alpha ^{2}+C_{l_{r1}}\alpha +C_{l_{r0}})r\\
+\end{split} \\
+&\begin{split}
+C_{n}(\alpha,\beta,\delta_{ail}\delta_{rud},V)=&(C_{n_{\beta_{2}}}\alpha^{2}+C_{n_{\beta_{1}}}\alpha
++C_{n_{\beta_{0}}})\beta \\
+&+ (C_{n_{\delta_{rud_{4}}}}\alpha^{4}
++C_{n_{\delta_{rud_{3}}}}\alpha^{3}+C_{n_{\delta_{rud_{2}}}}\alpha^{2}+
+C_{n_{\delta_{rud_{1}}}}\alpha+C_{n_{\delta_{rud_{0}}}})\delta_{rud} \\
+& +(C_{n_{\delta_{ail_{3}}}}\alpha^{3}+C_{n_{\delta_{ail_{2}}}}\alpha^{2}+
+C_{n_{\delta_{ail_{1}}}}\alpha+C_{n_{\delta_{ail_{0}}}})\delta_{ail}\\
+& +(C_{n_{\delta_{flap_{2}}}}\alpha^{2}+
+C_{n_{\delta_{flap_{1}}}}\alpha+C_{n_{\delta_{flap_{0}}}})\delta_{flap}\\
+&+ b/2V(C_{n_{p1}}\alpha +C_{n_{p0}})p+b/2V(C_{n_{r1}}\alpha +C_{n_{r0}})r\\
+\end{split}
+\end{split}
+\end{equation}
+ضرایب پایه و مشتق گیرهای کنترلی بکار رفته در روابط بالا در جداول \ref{داده‌های مربوط به ضریب گشتاور پیچ} تا  \ref{داده‌های مربوط به ضریب گشتاور یاو} فهرست شده‌اند.
+\begin{table}
+\centering%
+\caption{داده‌های مربوط به ضریب گشتاور پیچ}\label{داده‌های مربوط به ضریب گشتاور پیچ}
+\begin{tabular}{ |c|c|c|c| }
+  \hline
+  مشتق‌گیرهای میرایی & \multicolumn{2}{|c|}{مشتق‌گیرهای کنترلی}  & ضرایب پایه \\ \hline
+  64٫7190$C_{M_{q_{3}}}=$ & ۰٫۱۹۸۹$C_{M_{\delta_{el2}}}=$ & 0٫9338$C_{M_{\delta_{stab2}}}=$ & 1٫2897$C_{M_{\alpha_{2}}}= -$\\
+  \hline
+ 68٫5641$C_{M_{q_{2}}}=-$ & ۱٫۴۵۲۱$C_{M_{\delta_{el1}}}=-$ & 0٫3245$C_{M_{\delta_{stab1}}}=-$& 0٫5110$C_{M_{\alpha_{1}}}=$\\
+  \hline
+10٫9921$C_{M_{q_{1}}}=$& ۰٫۱۲۶۱$C_{M_{\delta_{el0}}}=-$ &0٫9051$C_{M_{\delta_{stab0}}}=-$ &0٫0866$C_{M_{\alpha_{0}}}=- $\\
+  \hline
+ 4٫1186$C_{M_{q_{0}}}=-$& &  & $ $\\
+ \hline
+ \end{tabular}
+\end{table}
+\begin{table}
+\centering%
+\caption{داده‌های مربوط به ضریب گشتاور رول}\label{داده‌های مربوط به ضریب گشتاور رول}
+\begin{tabular}{ |c|c|c|c| }
+  \hline
+  مشتق‌گیرهای میرایی & \multicolumn{2}{|c|}{مشتق‌گیرهای کنترلی}  & ضرایب پایه \\ \hline
+ 0٫2377$C_{l_{p_{1}}}=$ &  ۱٫۲۱۵۲$C_{l_{\delta_{flap2}}}=-$ &0٫1989$C_{l_{\delta_{ail3}}}=$ & 1٫6196$C_{l_{\beta_{4}}}= -$\\
+  \hline
+0٫3540$C_{l_{p_{0}}}=-$ & 0٫۱۲۴۶$C_{l_{\delta_{flap1}}}=-$ & 0٫2646$C_{l_{\delta_{ail2}}}=-$& 2٫3843$C_{l_{\beta_{3}}}=$\\
+  \hline
+1٫0871$C_{l_{r_{2}}}=-$ & 0٫۰۸۵۱$ C_{l_{\delta_{flap0}}}=$ & 0٫0516$C_{l_{\delta_{ail1}}}=-$ & 0٫3620$C_{l_{\beta_{2}}}=- $\\
+  \hline
+ 0٫7804$C_{l_{r_{1}}}=$ & & 0٫1424$ C_{l_{\delta_{ail0}}}=$ & 0٫4153$ C_{l_{\beta_{1}}}=-$\\
+ \hline
+0٫1983$C_{l_{r_{0}}}=$ &  & 0٫0274$C_{l_{\delta_{rud3}}}=-$ & 0٫0556$C_{l_{\beta_{0}}}=-$\\
+   \hline
+&  & 0٫0083$ C_{l_{\delta_{rud2}}}=$ & \\
+   \hline
+&  &0٫0014$C_{l_{\delta_{rud1}}}= $ &\\
+ \hline
+&  & 0٫0129 $C_{l_{\delta_{rud0}}}= $ & \\
+ \hline
+ \end{tabular}
+\end{table}
+\begin{table}
+\centering%
+\caption{داده‌های مربوط به ضریب گشتاور یاو}\label{داده‌های مربوط به ضریب گشتاور یاو}
+\begin{tabular}{ |c|c|c|c| }
+  \hline
+  مشتق‌گیرهای میرایی & \multicolumn{2}{|c|}{مشتق‌گیرهای کنترلی} & ضرایب پایه \\ \hline
+ 0٫0881 $C_{n_{p_{1}}}=-$& ۰٫۵۹۱۲$C_{n_{\delta_{flap2}}}=-$ & 0٫2694$C_{n_{\delta_{ail3}}}=$ & 0٫3816$C_{n_{\beta_{2}}}= -$\\
+  \hline
+ 0٫0792$C_{n_{p_{0}}}=$& ۱٫۳۱۰۵$C_{n_{\delta_{flap1}}}=$ & 0٫3413$C_{n_{\delta_{ail2}}}=-$& 0٫0329$C_{n_{\beta_{1}}}=$\\
+  \hline
+0٫1307$C_{n_{r_{1}}}=-$& ۰٫۰۱۵۳$ C_{n_{\delta_{flap0}}}=$ & 0٫0584$C_{n_{\delta_{ail1}}}=$ & 0٫0885$C_{n_{\beta_{0}}}= $\\
+  \hline
+ 0٫4326$C_{n_{r_{0}}}=-$&& 0٫0104$ C_{n_{\delta_{ail0}}}=$ & \\
+ \hline
+  && 0٫3899$ C_{n_{\delta_{rud4}}}=$ & \\
+   \hline
+ && 0٫8980$C_{n_{\delta_{rud3}}}=-$ &\\
+   \hline
+ && 0٫5564$ C_{n_{\delta_{rud2}}}=$ & \\
+   \hline
+ && 0٫0176$C_{n_{\delta_{rud1}}}=- $ & \\
+ \hline
+ && 0٫0780$C_{n_{\delta_{rud0}}}=- $ & \\
+ \hline
+ \end{tabular}
+\end{table}
+\section{مدلسازی در نرم افزار متلب}
+قطعا یکی از دقیق‌ترین و کامل‌ترین نرم افزارها برای مدلسازی دینامیکی و کنترلی سیستم‌ها، نرم افزار متلب
+\LTRfootnote{Matlab}
+می‌باشد.
+موارد ذکر شده و معادلات بیان شده در این فصل،‌ در نرم افزار فوق شبیه‌سازی و پیاده‌سازی شده است و نتایج بدست آمده مورد بازبینی و تحلیل قرار گرفته است.
+
+مدل 6 درجه آزادی در شکل \ref{pic:RigidBody} و مدل نیروها و گشتاورهای آئرودینامیکی در شکل \ref{pic:Aerodynamics} به نمایش درآمده‌اند.
+نتیجه کلی این شبیه‌سازی که به طور کلی مدل\LTRfootnote{plant} مورد مطالعه را تشکیل می‌دهد در شکل \ref{pic:Plant} به نمایش درآمده‌است.
+	 	\begin{figure}[h]
+	 		\center
+	 		\includegraphics[height=0.3\textheight]{Picture/Plant.pdf}
+	 		\caption{مدل کلی مورد بررسی} \label{pic:Plant}
+	 	\end{figure}
+ \begin{figure}[b]
+ 	\center
+ 	\includegraphics[angle=90,height=0.9\textheight]{Picture/RigidBody.pdf}
+ 	\caption{مدلسازی جسم صلب} \label{pic:RigidBody}
+ 	\end{figure}
+ 	\begin{figure}[b]
+ 		\center
+ 		\includegraphics[angle=90,height=0.9\textheight]{Picture/Aerodynamics.pdf}
+ 		\caption{مدلسازی نیروها و گشتاورهای آئرودینامیکی} \label{pic:Aerodynamics}
+ 	\end{figure}
